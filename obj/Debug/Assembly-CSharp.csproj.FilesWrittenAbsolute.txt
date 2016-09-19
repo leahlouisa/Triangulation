@@ -1,0 +1,17 @@
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/Assembly-CSharp.dll.mdb
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/Assembly-CSharp.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/obj/Debug/Assembly-CSharp.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/obj/Debug/Assembly-CSharp.dll.mdb
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/UnityEngine.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/UnityEditor.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/UnityEngine.Networking.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/UnityEngine.UI.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/Mono.Cecil.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/Unity.DataContract.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/Unity.CecilTools.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/leahoats/Documents/UnityProjects/Triangulation/Temp/bin/Debug/Mono.Cecil.Mdb.dll
