@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>left_sidebar</key>
+	<dict>
+		<key>identifierList</key>
+		<array/>
+		<key>selectedTab</key>
+		<integer>9223372036854775807</integer>
+		<key>tabAlignment</key>
+		<integer>0</integer>
+		<key>tabOptions</key>
+		<integer>2</integer>
+	</dict>
+	<key>right_sidebar</key>
+	<dict>
+		<key>identifierList</key>
+		<array>
+			<string>MDABTabViewStyle</string>
+			<string>MDABTabViewGeometry</string>
+			<string>MDABTextController</string>
+			<string>MDABTabViewLayers</string>
+		</array>
+		<key>selectedTab</key>
+		<integer>2</integer>
+		<key>tabAlignment</key>
+		<integer>0</integer>
+		<key>tabOptions</key>
+		<integer>2</integer>
+	</dict>
+	<key>splits</key>
+	<dict>
+		<key>items</key>
+		<array>
+			<dict>
+				<key>behaviour</key>
+				<integer>1</integer>
+				<key>can_collapse</key>
+				<true/>
+				<key>collapsed</key>
+				<true/>
+				<key>frame</key>
+				<string>{{0, 0}, {270, 768}}</string>
+				<key>identifier</key>
+				<string>left_sidebar</string>
+				<key>max_size</key>
+				<real>350</real>
+				<key>min_size</key>
+				<real>250</real>
+			</dict>
+			<dict>
+				<key>behaviour</key>
+				<integer>2</integer>
+				<key>can_collapse</key>
+				<true/>
+				<key>collapsed</key>
+				<false/>
+				<key>frame</key>
+				<string>{{0, 0}, {1088, 768}}</string>
+				<key>max_size</key>
+				<real>-1</real>
+				<key>min_size</key>
+				<real>-1</real>
+			</dict>
+			<dict>
+				<key>behaviour</key>
+				<integer>1</integer>
+				<key>can_collapse</key>
+				<true/>
+				<key>collapsed</key>
+				<false/>
+				<key>frame</key>
+				<string>{{1089, 0}, {350, 768}}</string>
+				<key>identifier</key>
+				<string>right_sidebar</string>
+				<key>max_size</key>
+				<real>350</real>
+				<key>min_size</key>
+				<real>250</real>
+			</dict>
+		</array>
+		<key>vertical</key>
+		<true/>
+	</dict>
+</dict>
+</plist>

@@ -23,22 +23,25 @@ public class GameController : MonoBehaviour {
 	public Text redScoreText;
 	public Text blueScoreText;
 	public GameObject instructionsPanel;
+	public GameObject playerIDPanel;
 	//public GameObject[] Triangles;
 
 	private int numberOfTurnsWithNoLegalMoves = 0;
 	private int totalNumberOfPlayers = 2;
 	private string playerColor;
+	private string startingPlayerColor = "red";
 	private int dieOne;
 	private int dieTwo;
 	private int redConsolationScore = 0;
 	private int blueConsolationScore = 0;
+	private AIPlayer aiplayer;
 
 
 	// Use this for initialization
 	void Awake() {
 		CreateGameBoard ();
 		RegisterSelfWithGamePieces ();	
-		SetStartingPlayer ();
+		//SetStartingPlayer ();
 	}
 
 	void CreateGameBoard() {
@@ -88,7 +91,7 @@ public class GameController : MonoBehaviour {
 			starterNumbers.RemoveAt (itemPicker);
 		}
 		for (int i = 0; i < Triangles.Length; i++) {
-			Triangles [i].GetComponent<Image>().color = new Color32 (00, 20, 00, 255);
+			Triangles [i].GetComponent<Image>().color = new Color32 (00, 00, 00, 0);
 			SetTriangleVertices ();
 		}
 	}
@@ -101,8 +104,28 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	public void CreateAIPlayer() {
+		//and register the game controller with it
+		aiplayer = gameObject.AddComponent<AIPlayer>() as AIPlayer;
+		aiplayer.GameControllerSetter (this);
+	}
+
+	public void DestroyAIPlayer() {
+		if (aiplayer) {
+			Destroy (aiplayer);
+		}
+	}
+
 	public string GetPlayerSide() {
 		return playerColor;
+	}
+
+	public bool IsThereAnAIPlayer() {
+		if (aiplayer) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public void EndTurn() {
@@ -120,8 +143,15 @@ public class GameController : MonoBehaviour {
 			blueHighlighter.SetActive(true);
 			redHighlighter.SetActive(false);
 		}
-		diceRollButton.interactable = true;
-
+		if (aiplayer) {
+			if (!playerColor.Equals (aiplayer.getAIPlayerColor ())) {
+				diceRollButton.interactable = true;
+			} else {
+				aiplayer.takeTurn ();
+			}
+		} else {
+			diceRollButton.interactable = true;
+		}
 	}
 
 	int CheckForLegalMoves() {
@@ -140,7 +170,16 @@ public class GameController : MonoBehaviour {
 		}
 		//Debug.Log ("legalMoveCount= " + legalMoveCount);
 		return legalMoveCount;
+	}
 
+	public bool attemptToClaimPiece(int pieceNum) {
+		//if CheckForLegalMoves made this button interactable, claim it
+		if (buttonTexts [pieceNum].GetComponentInParent<Button> ().interactable) {
+			buttonTexts [pieceNum].GetComponentInParent<GamePiece> ().ClaimSpace ();
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	bool CheckForEndOfGame(int numTurnNoMoves) {
@@ -169,6 +208,7 @@ public class GameController : MonoBehaviour {
 			if (gameOver) {
 				EndGame ();
 			} else {
+				noMovesPanel.GetComponentInChildren<Text> ().text = char.ToUpper(playerColor[0]) + playerColor.Substring(1) + ", you have no legal moves!";
 				noMovesPanel.SetActive (true);
 			}
 		} else if (numberOfTurnsWithNoLegalMoves > 0) {
@@ -235,13 +275,21 @@ public class GameController : MonoBehaviour {
 		gameOverPanel.SetActive (false);
 		noMovesPanel.SetActive (false);
 		diceRollPanel.SetActive(false);
-		diceRollButton.interactable = true;
+		if (aiplayer) {
+			if (!playerColor.Equals (aiplayer.getAIPlayerColor ())) {
+				diceRollButton.interactable = true;
+			} else {
+				aiplayer.takeTurn ();
+			}
+		} else {
+			diceRollButton.interactable = true;
+		}
 	}
 
 
-	void SetStartingPlayer() {
+	public void SetStartingPlayer() {
 		// and zeroize the scores
-		playerColor = "red";
+		playerColor = startingPlayerColor;
 		if (playerColor.Equals("red")) {
 			redHighlighter.SetActive(true);
 			blueHighlighter.SetActive (false);
@@ -253,6 +301,13 @@ public class GameController : MonoBehaviour {
 		blueScore = 0;
 		redConsolationScore = 0;
 		blueConsolationScore = 0;
+		if (startingPlayerColor.Equals ("red")) {
+			startingPlayerColor = "blue";
+		} else {
+			startingPlayerColor = "red";
+		}
+		//playerIDPanel is only active at game launch
+		playerIDPanel.SetActive (false);
 	}
 
 	public void HideInstructions() {
