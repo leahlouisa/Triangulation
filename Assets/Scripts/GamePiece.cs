@@ -12,6 +12,7 @@ public class GamePiece : MonoBehaviour {
 	public SpriteRenderer renderer;
 	public Text buttonText;
 	private GameController gameCont;
+	public Sprite[] gamePieceSprites;
 
 
 	public void ClaimSpace() {
@@ -36,10 +37,10 @@ public class GamePiece : MonoBehaviour {
 		gameCont.EndTurn ();
 	}
 
-	public void ResetPiece() {
+	public void ResetPiece(int pieceValue) {
 		//renderer.color = new Color32 (255, 255, 255, 255);
-		buttonText.color = new Color32 (0, 0, 0, 255);
-		renderer.sprite = unclaimedButton;
+		buttonText.color = new Color32 (0, 0, 0, 0);
+		renderer.sprite = gamePieceSprites[pieceValue - 1];
 	}
 
 	public void GameControllerSetter(GameController gc) {

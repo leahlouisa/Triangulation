@@ -33,6 +33,8 @@ public class GameController : MonoBehaviour {
 	public Sprite rolledFour;
 	public Sprite rolledFive;
 	public Sprite rolledSix;
+	public Text playerOneName;
+	public Text playerTwoName;
 
 	private int numberOfTurnsWithNoLegalMoves = 0;
 	private int totalNumberOfPlayers = 2;
@@ -96,7 +98,7 @@ public class GameController : MonoBehaviour {
 		for (int i = starterNumbers.Count; i > 0; i--) {
 			int itemPicker = rando.Next (starterNumbers.Count);
 			buttonTexts [i - 1].text = starterNumbers [itemPicker].ToString ();
-			buttonTexts [i - 1].GetComponentInParent<GamePiece> ().ResetPiece ();
+			buttonTexts [i - 1].GetComponentInParent<GamePiece> ().ResetPiece (starterNumbers [itemPicker]);
 			starterNumbers.RemoveAt (itemPicker);
 		}
 		for (int i = 0; i < Triangles.Length; i++) {
@@ -234,7 +236,11 @@ public class GameController : MonoBehaviour {
 	private IEnumerator waitForAWhileThenShowNoMoves(float seconds) {
 		yield return new WaitForSeconds(seconds);
 		UpdateScores ();
-		noMovesPanel.GetComponentInChildren<Text> ().text = char.ToUpper(playerColor[0]) + playerColor.Substring(1) + ", you have no legal moves!";
+		if (playerColor.Equals("red")) {
+			noMovesPanel.GetComponentInChildren<Text> ().text = char.ToUpper(playerOneName.text[0]) + playerOneName.text.Substring(1) + ", you have no legal moves!";
+		} else {
+			noMovesPanel.GetComponentInChildren<Text> ().text = char.ToUpper(playerTwoName.text[0]) + playerTwoName.text.Substring(1) + ", you have no legal moves!";
+		}
 		noMovesPanel.SetActive (true);
 	}
 
@@ -319,13 +325,13 @@ public class GameController : MonoBehaviour {
 		}
 		diceRollButton.interactable = false;
 		if (redScore > blueScore) {
-			gameOverPanel.GetComponentInChildren<Text> ().text = "Red wins!!!";
+					gameOverPanel.GetComponentInChildren<Text> ().text =char.ToUpper(playerOneName.text[0]) + playerOneName.text.Substring(1) + " wins!!!";
 			gameOverPanel.GetComponent<Image> ().color = new Color32 (255, 0, 0, 200);
 		} else if (blueScore > redScore) {
-			gameOverPanel.GetComponentInChildren<Text>().text = "Blue wins!!!";
+					gameOverPanel.GetComponentInChildren<Text>().text = char.ToUpper(playerTwoName.text[0]) + playerTwoName.text.Substring(1) + " wins!!!";
 			gameOverPanel.GetComponent<Image> ().color = new Color32 (0, 0, 255, 200);
 		} else {
-			gameOverPanel.GetComponentInChildren<Text> ().text = "You tied!";
+					gameOverPanel.GetComponentInChildren<Text> ().text = char.ToUpper(playerTwoName.text[0]) + playerTwoName.text.Substring(1) + " and " + char.ToUpper(playerOneName.text[0]) + playerOneName.text.Substring(1) + " tied!";
 			gameOverPanel.GetComponent<Image> ().color = new Color32 (255, 255, 255, 200);
 		}
 		gameOverPanel.SetActive(true);
