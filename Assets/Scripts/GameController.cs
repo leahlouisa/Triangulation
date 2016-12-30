@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour {
 	public Sprite rolledSix;
 	public Text playerOneName;
 	public Text playerTwoName;
+	public GameObject optionsPanel;
 
 	private int numberOfTurnsWithNoLegalMoves = 0;
 	private int totalNumberOfPlayers = 2;
@@ -50,7 +51,7 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake() {
-		CreateGameBoard ();
+		//CreateGameBoard ();
 		RegisterSelfWithGamePieces ();	
 		//SetStartingPlayer ();
 	}
@@ -347,6 +348,7 @@ public class GameController : MonoBehaviour {
 		UpdateScores ();
 		gameOverPanel.SetActive (false);
 		noMovesPanel.SetActive (false);
+		optionsPanel.SetActive (false);
 		//diceRollPanel.SetActive(false);
 		firstDie.SetActive(false);
 		secondDie.SetActive (false);
