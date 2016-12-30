@@ -25,6 +25,14 @@ public class GameController : MonoBehaviour {
 	public GameObject instructionsPanel;
 	public GameObject playerIDPanel;
 	//public GameObject[] Triangles;
+	public GameObject firstDie;
+	public GameObject secondDie;
+	public Sprite rolledOne;
+	public Sprite rolledTwo;
+	public Sprite rolledThree;
+	public Sprite rolledFour;
+	public Sprite rolledFive;
+	public Sprite rolledSix;
 
 	private int numberOfTurnsWithNoLegalMoves = 0;
 	private int totalNumberOfPlayers = 2;
@@ -35,6 +43,7 @@ public class GameController : MonoBehaviour {
 	private int redConsolationScore = 0;
 	private int blueConsolationScore = 0;
 	private AIPlayer aiplayer;
+	private IEnumerator routine;
 
 
 	// Use this for initialization
@@ -131,7 +140,9 @@ public class GameController : MonoBehaviour {
 	public void EndTurn() {
 		UpdateScores ();
 		noMovesPanel.SetActive (false);
-		diceRollPanel.SetActive(false);
+		//diceRollPanel.SetActive(false);
+		firstDie.SetActive (false);
+		secondDie.SetActive (false);
 		for (int i = 0; i < buttonTexts.Length; i++) {
 			buttonTexts [i].GetComponentInParent<Button> ().interactable = false;
 		}
@@ -194,25 +205,79 @@ public class GameController : MonoBehaviour {
 		System.Random rando = new System.Random();
 		dieOne = rando.Next (1, 7);
 		dieTwo = rando.Next (1, 7);
-		diceRollText.text = "You rolled \n a " + dieOne + " and a " + dieTwo;
-		diceRollPanel.SetActive(true);
+		setDiceImages ();
+		//diceRollText.text = "You rolled \n a " + dieOne + " and a " + dieTwo;
+		//diceRollPanel.SetActive(true);
+		firstDie.SetActive (true);
+		secondDie.SetActive (true);
 		int legalMoveCount = CheckForLegalMoves ();
 		if (legalMoveCount == 0) {
 			if (playerColor.Equals ("red"))
 				redConsolationScore++;
 			else
 				blueConsolationScore++;
-			UpdateScores ();
+			//UpdateScores ();
 			numberOfTurnsWithNoLegalMoves++;
 			bool gameOver = CheckForEndOfGame (numberOfTurnsWithNoLegalMoves);
 			if (gameOver) {
-				EndGame ();
+				routine = EndGame ();
+				StartCoroutine (routine);
 			} else {
-				noMovesPanel.GetComponentInChildren<Text> ().text = char.ToUpper(playerColor[0]) + playerColor.Substring(1) + ", you have no legal moves!";
-				noMovesPanel.SetActive (true);
+				routine = waitForAWhileThenShowNoMoves(3.5f);
+				StartCoroutine(routine);
 			}
 		} else if (numberOfTurnsWithNoLegalMoves > 0) {
 			numberOfTurnsWithNoLegalMoves--;
+		}
+	}
+
+	private IEnumerator waitForAWhileThenShowNoMoves(float seconds) {
+		yield return new WaitForSeconds(seconds);
+		UpdateScores ();
+		noMovesPanel.GetComponentInChildren<Text> ().text = char.ToUpper(playerColor[0]) + playerColor.Substring(1) + ", you have no legal moves!";
+		noMovesPanel.SetActive (true);
+	}
+
+	private void setDiceImages() {
+		switch (dieOne) {
+		case 1:
+			firstDie.GetComponentInChildren<Image>().sprite = rolledOne;
+			break;
+		case 2:
+			firstDie.GetComponentInChildren<Image>().sprite = rolledTwo;
+			break;
+		case 3:
+			firstDie.GetComponentInChildren<Image>().sprite = rolledThree;
+			break;
+		case 4:
+			firstDie.GetComponentInChildren<Image>().sprite = rolledFour;
+			break;
+		case 5:
+			firstDie.GetComponentInChildren<Image>().sprite = rolledFive;
+			break;
+		case 6:
+			firstDie.GetComponentInChildren<Image>().sprite = rolledSix;
+			break;
+		}
+		switch (dieTwo) {
+		case 1:
+			secondDie.GetComponentInChildren<Image>().sprite = rolledOne;
+			break;
+		case 2:
+			secondDie.GetComponentInChildren<Image>().sprite = rolledTwo;
+			break;
+		case 3:
+			secondDie.GetComponentInChildren<Image>().sprite = rolledThree;
+			break;
+		case 4:
+			secondDie.GetComponentInChildren<Image>().sprite = rolledFour;
+			break;
+		case 5:
+			secondDie.GetComponentInChildren<Image>().sprite = rolledFive;
+			break;
+		case 6:
+			secondDie.GetComponentInChildren<Image>().sprite = rolledSix;
+			break;
 		}
 	}
 
@@ -246,7 +311,9 @@ public class GameController : MonoBehaviour {
 		blueScoreText.text = blueScore.ToString ();
 	}
 
-	public void EndGame() {
+	public IEnumerator EndGame() {
+		yield return new WaitForSeconds(3.5f);
+		UpdateScores ();
 		for (int i = 0; i < buttonTexts.Length; i++) {
 			buttonTexts [i].GetComponentInParent<Button> ().interactable = false;
 		}
@@ -274,7 +341,9 @@ public class GameController : MonoBehaviour {
 		UpdateScores ();
 		gameOverPanel.SetActive (false);
 		noMovesPanel.SetActive (false);
-		diceRollPanel.SetActive(false);
+		//diceRollPanel.SetActive(false);
+		firstDie.SetActive(false);
+		secondDie.SetActive (false);
 		if (aiplayer) {
 			if (!playerColor.Equals (aiplayer.getAIPlayerColor ())) {
 				diceRollButton.interactable = true;
